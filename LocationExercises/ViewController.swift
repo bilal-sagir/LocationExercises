@@ -22,7 +22,7 @@ class ViewController: UIViewController
         let myRegion = MKCoordinateRegion.init(center: myCenter, latitudinalMeters: 300, longitudinalMeters: 300)
         
         myMap.setRegion(myRegion, animated: true)
-        
+        //coomment
         
     }
 
