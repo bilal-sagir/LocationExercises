@@ -14,8 +14,6 @@ class ViewController: UIViewController
         myMap.isRotateEnabled = true
         
     }
-
-
     
 }
 
