@@ -12,17 +12,16 @@ class ViewController: UIViewController
         myMap.isZoomEnabled = true
         myMap.isScrollEnabled = true
         myMap.isRotateEnabled = true
-        
-    }
-
-
-    @IBAction func takeMeToLocation(_ sender: Any)
-    {
         let myCenter = CLLocationCoordinate2D(latitude: 40.978189, longitude: 29.041718)
         let myRegion = MKCoordinateRegion.init(center: myCenter, latitudinalMeters: 300, longitudinalMeters: 300)
-        
         myMap.setRegion(myRegion, animated: true)
-        //coomment
+        
+        let myAnnotation = MKPointAnnotation()
+        myAnnotation.coordinate = myCenter
+        myAnnotation.title = "Burası"
+        myAnnotation.subtitle = "subtitle yazi"
+        myMap.addAnnotation(myAnnotation)
+        
         
     }
 
