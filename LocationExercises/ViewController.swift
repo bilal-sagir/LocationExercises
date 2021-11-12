@@ -19,7 +19,7 @@ class ViewController: UIViewController
     @IBAction func takeMeToLocation(_ sender: Any)
     {
         let myCenter = CLLocationCoordinate2D(latitude: 40.978189, longitude: 29.041718)
-        let myRegion = MKCoordinateRegion.init(center: myCenter, latitudinalMeters: 200, longitudinalMeters: 200)
+        let myRegion = MKCoordinateRegion.init(center: myCenter, latitudinalMeters: 300, longitudinalMeters: 300)
         
         myMap.setRegion(myRegion, animated: true)
         
