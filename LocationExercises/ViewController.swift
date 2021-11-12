@@ -1,7 +1,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController
+class ViewController: UIViewController, MKMapViewDelegate
 {
 
     @IBOutlet weak var myMap: MKMapView!
@@ -12,38 +12,47 @@ class ViewController: UIViewController
         myMap.isZoomEnabled = true
         myMap.isScrollEnabled = true
         myMap.isRotateEnabled = true
+        
         let myCenter = CLLocationCoordinate2D(latitude: 40.978189, longitude: 29.041718)
         
         let myRegion = MKCoordinateRegion.init(center: myCenter, latitudinalMeters: 300, longitudinalMeters: 300)
+        
         myMap.setRegion(myRegion, animated: true)
         
-        let tommysCoor = CLLocationCoordinate2D(latitude: 40.978189, longitude: 29.042718)
-        
-        let tommys = Restaurants(name: "Tommys", coord: tommysCoor, title: "Tommys", subtitle: "lol")
-        
-        myMap.addAnnotation(tommys)
-        
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = myCenter
+        annotation.title = "HOME"
+        myMap.addAnnotation(annotation)
+        myMap.delegate = self
     }
     
-    
-    class Restaurants : NSObject, MKAnnotation
+    func mapView(_ mapView: MKMapView,
+                 viewFor annotation: MKAnnotation) -> MKAnnotationView?
     {
-        var coordinate: CLLocationCoordinate2D
+        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: "annotId")
         
-        var title: String?
-        var subtitle: String?
+        annotationView.canShowCallout = true
         
-        var name: String
+        annotationView.rightCalloutAccessoryView = UIButton.init(type: UIButton.ButtonType.detailDisclosure)
         
-        init(name: String, coord: CLLocationCoordinate2D,
-             title:String?, subtitle: String? )
-        {
-            self.name = name
-            self.coordinate = coord
-            self.title = title
-            self.subtitle = subtitle
-        }
+        return annotationView
     }
+    
+    func mapView(_ mapView: MKMapView,
+                 annotationView view: MKAnnotationView,
+                 calloutAccessoryControlTapped control: UIControl)
+    {
+        guard let annotation = view.annotation else {return}
+        
+        let urlString = "http://maps.apple.com/?ll=\(annotation.coordinate.latitude),\(annotation.coordinate.longitude)"
+        
+        guard let url = URL(string: urlString) else {return}
+        
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        
+        
+    }
+
 
 }
 
